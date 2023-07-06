@@ -10,9 +10,6 @@ COPY package*.json ./
 # Installe les dépendances du projet
 RUN npm install
 
-# Copie tous les fichiers du répertoire actuel dans le répertoire de travail du conteneur
-COPY . .
-
 EXPOSE 3000
 
 # Construit l'application React

@@ -11,9 +11,6 @@ COPY package*.json ./
 # Installe les dépendances du projet
 RUN npm install
 
-# Copie tous les fichiers du répertoire actuel dans le répertoire de travail du conteneur
-COPY . .
-
 EXPOSE 9000
 
 # Définit les variables d'environnement pour la connexion à la base de données
