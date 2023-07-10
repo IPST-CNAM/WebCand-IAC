@@ -9,7 +9,7 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=user
     networks:
-      - app-network
+      - backend-net
     ports:
       - 3306:3306
     volumes:
@@ -26,10 +26,13 @@ services:
       - DB_USER=user
       - DB_PASSWORD=user
       - DB_NAME=WebCand
+      - PORT=9000
+      - CLIENT-ORIGIN=http://localhost:3000
     volumes:
       - ../WebCand-API:/app
     networks:
-      - app-network
+      - frontend-net
+      - backend-net
     depends_on:
       - db
     ports:
@@ -39,15 +42,17 @@ services:
     image: ghcr.io/ipst-cnam/base-front:1.0
     restart: always
     environment:
-      - REACT_APP_BACKEND_URL=http://backend:9000
+      - REACT_APP_BACKEND_URL=backend
     volumes:
       - ../WebCand-Webclient:/app
     networks:
-      - app-network
+      - frontend-net
     ports:
       - 3000:3000
 
 
 networks:
-    app-network:
+    frontend-net:
+      driver: bridge
+    backend-net:
       driver: bridge
