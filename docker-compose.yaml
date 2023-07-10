@@ -1,0 +1,53 @@
+version: '3'
+services:
+  db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=WebCand
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=user
+    networks:
+      - app-network
+    ports:
+      - 3306:3306
+    volumes:
+      - ./Database:/docker-entrypoint-initdb.d
+      
+  backend:
+    image: ghcr.io/ipst-cnam/base-back:1.0
+    build:
+      context: ../WebCand-API
+    restart: always
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=user
+      - DB_PASSWORD=user
+      - DB_NAME=WebCand
+    volumes:
+      - ../WebCand-API:/app
+    networks:
+      - app-network
+    depends_on:
+      - db
+    ports:
+      - 9000:9000
+
+  webclient:
+    image: ghcr.io/ipst-cnam/base-front:1.0
+    restart: always
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend:9000
+    volumes:
+      - ../WebCand-Webclient:/app
+    networks:
+      - app-network
+    ports:
+      - 3000:3000
+
+
+networks:
+    app-network:
+      driver: bridge
