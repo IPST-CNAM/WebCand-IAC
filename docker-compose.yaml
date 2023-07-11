@@ -10,8 +10,8 @@ services:
       - MYSQL_PASSWORD=user
     networks:
       - backend-net
-    ports:
-      - 3306:3306
+    expose:
+      - 3306
     volumes:
       - ./Database:/docker-entrypoint-initdb.d
       
@@ -37,16 +37,20 @@ services:
       - db
     ports:
       - 9000:9000
+    expose:
+      - 9000
 
   webclient:
     image: ghcr.io/ipst-cnam/base-front:1.0
     restart: always
     environment:
-      - REACT_APP_BACKEND_URL=backend
+      - REACT_APP_BACKEND_URL=localhost
     volumes:
       - ../WebCand-Webclient:/app
     networks:
       - frontend-net
+    expose:
+      - 3000
     ports:
       - 3000:3000
 
