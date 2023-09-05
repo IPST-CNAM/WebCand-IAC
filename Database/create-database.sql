@@ -8,6 +8,16 @@ CREATE USER IF NOT EXISTS 'user'@'%' IDENTIFIED BY 'user';
 GRANT ALL PRIVILEGES ON WebCand.* TO 'user'@'%';
 FLUSH PRIVILEGES;
 
+-- Remarks:
+-- Dates are stored as integers in the format of Linux timestamps
+
+-- The role of the user?
+CREATE TABLE IF NOT EXISTS AdministrativeLevel(
+   Id_EnumAdministrativeLevel INT AUTO_INCREMENT,
+   role VARCHAR(256),
+   PRIMARY KEY(Id_EnumAdministrativeLevel)
+);
+
 -- The main User table
 CREATE TABLE IF NOT EXISTS RegisteredUser(
    id_registered_user INT AUTO_INCREMENT,
@@ -17,7 +27,9 @@ CREATE TABLE IF NOT EXISTS RegisteredUser(
    birth_date INT NOT NULL,
    password VARCHAR(256) NOT NULL,
    phone_number VARCHAR(256) NOT NULL,
+   Id_EnumAdministrativeLevel INT NOT NULL,
    PRIMARY KEY(id_registered_user),
+   FOREIGN KEY(Id_EnumAdministrativeLevel) REFERENCES AdministrativeLevel(Id_EnumAdministrativeLevel),
    UNIQUE(email),
    UNIQUE(phone_number)
 );
@@ -57,6 +69,13 @@ CREATE TABLE IF NOT EXISTS TrainingCourse(
    description TEXT,
    duration INT NOT NULL,
    PRIMARY KEY(id_training_course)
+);
+
+CREATE TABLE IF NOT EXISTS ApplicationStatus(
+   Id_ApplicationStatus INT AUTO_INCREMENT,
+   status VARCHAR(256) NOT NULL,
+   PRIMARY KEY(Id_ApplicationStatus),
+   UNIQUE(status)
 );
 
 CREATE TABLE IF NOT EXISTS Application(
@@ -119,7 +138,6 @@ CREATE TABLE IF NOT EXISTS AdmittedCandidate(
 
 CREATE TABLE IF NOT EXISTS Administrative(
    id_registered_user INT,
-   role VARCHAR(256),
    PRIMARY KEY(id_registered_user),
    FOREIGN KEY(id_registered_user) REFERENCES RegisteredUser(id_registered_user)
 );
@@ -131,9 +149,11 @@ CREATE TABLE IF NOT EXISTS EducationManager(
 );
 
 CREATE TABLE IF NOT EXISTS RecruitmentSession(
-   id_recruitement_session INT AUTO_INCREMENT,
+   id_recruitement_session INT,
+   name VARCHAR(256) NOT NULL,
    start_date INT NOT NULL,
    end_date INT NOT NULL,
+   _open INT NOT NULL,
    id_registered_user INT NOT NULL,
    PRIMARY KEY(id_recruitement_session),
    FOREIGN KEY(id_registered_user) REFERENCES EducationManager(id_registered_user)
@@ -143,6 +163,15 @@ CREATE TABLE IF NOT EXISTS SchoolNote(
    id_school_note INT AUTO_INCREMENT,
    school_subject VARCHAR(256) NOT NULL,
    note DECIMAL(15,2) NOT NULL,
+   id_registered_user INT NOT NULL,
+   PRIMARY KEY(id_school_note),
+   FOREIGN KEY(id_registered_user) REFERENCES Candidate(id_registered_user)
+);
+
+CREATE TABLE SchoolGrade(
+   id_school_note INT AUTO_INCREMENT,
+   school_subject VARCHAR(256) NOT NULL,
+   grade DOUBLE NOT NULL,
    id_registered_user INT NOT NULL,
    PRIMARY KEY(id_school_note),
    FOREIGN KEY(id_registered_user) REFERENCES Candidate(id_registered_user)
@@ -190,4 +219,12 @@ CREATE TABLE IF NOT EXISTS Apply(
    PRIMARY KEY(id_registered_user, id_application),
    FOREIGN KEY(id_registered_user) REFERENCES Candidate(id_registered_user),
    FOREIGN KEY(id_application) REFERENCES Application(id_application)
+);
+
+CREATE TABLE IF NOT EXISTS CourseInSession(
+   id_recruitement_session INT,
+   id_training_course INT,
+   PRIMARY KEY(id_recruitement_session, id_training_course),
+   FOREIGN KEY(id_recruitement_session) REFERENCES RecruitmentSession(id_recruitement_session),
+   FOREIGN KEY(id_training_course) REFERENCES TrainingCourse(id_training_course)
 );

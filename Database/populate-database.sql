@@ -1,3 +1,15 @@
+--Insert sample data into AdministrativeLevel
+INSERT INTO AdministrativeLevel (role)
+VALUES
+    ('Admin'),
+    ('Company_Representative'),
+    ('Teacher'),
+    ('Candidate');
+    ('AdmittedCandidate'),
+    ('Administrative'),
+    ('EducationManager'),
+    
+
 -- Insert sample data into SchoolSubject table
 INSERT INTO SchoolSubject (title, description, credit)
 VALUES
@@ -8,6 +20,9 @@ VALUES
 -- Insert sample data into TrainingCourse table
 INSERT INTO TrainingCourse (title, description, duration)
 VALUES
+    ('Web Development', 'Learn web development technologies', 12),
+    ('Data Science', 'Introduction to data analysis and machine learning', 8),
+    ('Digital Marketing', 'Master digital marketing strategies', 6);
     ('Web Development', 'Learn web development technologies', 12),
     ('Data Science', 'Introduction to data analysis and machine learning', 8),
     ('Digital Marketing', 'Master digital marketing strategies', 6);
@@ -98,10 +113,10 @@ VALUES ('cover_letter1_url', 1),
        ('cover_letter3_url', 3);
 
 -- Insert sample data into Administrative table
-INSERT INTO Administrative (id_registered_user, role)
+INSERT INTO Administrative (id_registered_user)
 VALUES
-    (1, 'Admin Assistant'),
-    (2, 'HR Manager');
+    (1),
+    (2);
 
 -- Insert sample data into EducationManager table
 INSERT INTO EducationManager (id_registered_user)
@@ -111,11 +126,12 @@ VALUES
 
 -- Insert sample data into RecruitmentSession table
 -- Note: The start_date and end_date values are in Unix timestamp format
--- the id_registered_user values are the id of the EducationManager
-INSERT INTO RecruitmentSession (start_date, end_date, id_registered_user)
+-- the _open values are 1 for open and 0 for closed
+-- the id_registered_user values are the id of the EducationManager in charge of the recruitment session
+INSERT INTO RecruitmentSession (name,start_date, end_date, _open, id_registered_user)
 VALUES
-    (UNIX_TIMESTAMP('2023-08-01'), UNIX_TIMESTAMP('2023-08-31'), 3),
-    (UNIX_TIMESTAMP('2023-09-01'), UNIX_TIMESTAMP('2023-09-30'), 4);
+    ('2023 Fall Recruitment', UNIX_TIMESTAMP('2022-06-01'), UNIX_TIMESTAMP('2022-09-30'), 1, 3),
+    ('2023 Spring Recruitment', UNIX_TIMESTAMP('2023-01-01'), UNIX_TIMESTAMP('2023-04-30'), 1, 4);
 
 -- Insert sample data into SchoolNote table
 INSERT INTO SchoolNote (school_subject, note, id_registered_user)
@@ -146,5 +162,19 @@ VALUES
 INSERT INTO CourseSubject (id_school_subject, id_training_course)
 VALUES
     (1, 1),
+    (1, 3),
+    (1, 4),
     (2, 1),
+    (2, 2),
+    (2, 4),
+    (3, 2);
+
+-- Insert sample data into CourseInSession table
+INSERT INTO CourseInSession (id_training_course, id_recruitment_session)
+VALUES
+    (1, 1),
+    (2, 1),
+    (4, 1);
+    (1, 2),
+    (2, 2);
     (3, 2);
