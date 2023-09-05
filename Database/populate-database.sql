@@ -1,13 +1,13 @@
---Insert sample data into AdministrativeLevel
+-- Insert sample data into AdministrativeLevel
 INSERT INTO AdministrativeLevel (role)
 VALUES
     ('Admin'),
     ('Company_Representative'),
     ('Teacher'),
-    ('Candidate');
+    ('Candidate'),
     ('AdmittedCandidate'),
     ('Administrative'),
-    ('EducationManager'),
+    ('EducationManager');
     
 
 -- Insert sample data into SchoolSubject table
@@ -22,24 +22,24 @@ INSERT INTO TrainingCourse (title, description, duration)
 VALUES
     ('Web Development', 'Learn web development technologies', 12),
     ('Data Science', 'Introduction to data analysis and machine learning', 8),
-    ('Digital Marketing', 'Master digital marketing strategies', 6);
+    ('Digital Marketing', 'Master digital marketing strategies', 6),
     ('Web Development', 'Learn web development technologies', 12),
     ('Data Science', 'Introduction to data analysis and machine learning', 8),
     ('Digital Marketing', 'Master digital marketing strategies', 6);
 
 -- Insert sample data into RegisteredUser table
-INSERT INTO RegisteredUser (email, first_name, last_name, birth_date, password, phone_number)
+INSERT INTO RegisteredUser (email, first_name, last_name, birth_date, password, phone_number, Id_EnumAdministrativeLevel)
 VALUES
-    ('john@example.com', 'John', 'Doe', UNIX_TIMESTAMP('1990-05-15'), 'password123', '1234567890'),
-    ('jane@example.com', 'Jane', 'Smith', UNIX_TIMESTAMP('1992-09-20'), 'pass456', '9876543210'),
-    ('alice@example.com', 'Alice', 'Johnson', UNIX_TIMESTAMP('1988-12-31'), 'pass789', '4567891230'),
-    ('bob@example.com', 'Bob', 'Williams', UNIX_TIMESTAMP('1994-06-25'), 'pass012', '3216549870'),
-    ('emma@example.com', 'Emma', 'Brown', UNIX_TIMESTAMP('1997-03-18'), 'pass345', '9873216540'),
-    ('michael@example.com', 'Michael', 'Davis', UNIX_TIMESTAMP('1991-08-22'), 'pass678', '6549873210'),
-    ('sophia@example.com', 'Sophia', 'Miller', UNIX_TIMESTAMP('1995-11-12'), 'pass901', '3210987650'),
-    ('alex@example.com', 'Alex', 'Wilson', UNIX_TIMESTAMP('1993-02-07'), 'pass234', '6540129870'),
-    ('olivia@example.com', 'Olivia', 'Thompson', UNIX_TIMESTAMP('1998-09-02'), 'pass567', '9870123450'),
-    ('william@example.com', 'William', 'Jones', UNIX_TIMESTAMP('1996-04-09'), 'pass890', '6543210980');
+    ('john@example.com', 'John', 'Doe', UNIX_TIMESTAMP('1990-05-15'), 'password123', '1234567890', 2),
+    ('jane@example.com', 'Jane', 'Smith', UNIX_TIMESTAMP('1992-09-20'), 'pass456', '9876543210', 2),
+    ('alice@example.com', 'Alice', 'Johnson', UNIX_TIMESTAMP('1988-12-31'), 'pass789', '4567891230', 2),
+    ('bob@example.com', 'Bob', 'Williams', UNIX_TIMESTAMP('1994-06-25'), 'pass012', '3216549870', 3),
+    ('emma@example.com', 'Emma', 'Brown', UNIX_TIMESTAMP('1997-03-18'), 'pass345', '9873216540', 4),
+    ('michael@example.com', 'Michael', 'Davis', UNIX_TIMESTAMP('1991-08-22'), 'pass678', '6549873210', 4),
+    ('sophia@example.com', 'Sophia', 'Miller', UNIX_TIMESTAMP('1995-11-12'), 'pass901', '3210987650', 4),
+    ('alex@example.com', 'Alex', 'Wilson', UNIX_TIMESTAMP('1993-02-07'), 'pass234', '6540129870', 4),
+    ('olivia@example.com', 'Olivia', 'Thompson', UNIX_TIMESTAMP('1998-09-02'), 'pass567', '9870123450', 4),
+    ('william@example.com', 'William', 'Jones', UNIX_TIMESTAMP('1996-04-09'), 'pass890', '6543210980', 4);
 
 -- Insert sample data into Company table
 INSERT INTO Company (name, business_sector, size)
@@ -65,8 +65,7 @@ VALUES (1, 1),
 -- Insert sample data into Teacher table
 INSERT INTO Teacher (id_registered_user)
 VALUES
-    (3),
-    (4);
+    (3);
 
 -- Insert sample data into Candidate table
 INSERT INTO Candidate (id_registered_user, ine_number, last_degree, work_experiences, gender, skills)
@@ -155,8 +154,7 @@ VALUES
 -- Insert sample data into TeacherInstructs table
 INSERT INTO TeacherInstructs (id_registered_user, id_training_course)
 VALUES
-    (3, 1),
-    (4, 2);
+    (3, 1);
 
 -- Insert sample data into CourseSubject table
 INSERT INTO CourseSubject (id_school_subject, id_training_course)
@@ -170,11 +168,11 @@ VALUES
     (3, 2);
 
 -- Insert sample data into CourseInSession table
-INSERT INTO CourseInSession (id_training_course, id_recruitment_session)
+INSERT INTO CourseInSession (id_training_course, id_recruitement_session)
 VALUES
     (1, 1),
     (2, 1),
-    (4, 1);
+    (4, 1),
     (1, 2),
-    (2, 2);
+    (2, 2),
     (3, 2);

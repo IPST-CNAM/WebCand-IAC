@@ -74,8 +74,7 @@ CREATE TABLE IF NOT EXISTS TrainingCourse(
 CREATE TABLE IF NOT EXISTS ApplicationStatus(
    Id_ApplicationStatus INT AUTO_INCREMENT,
    status VARCHAR(256) NOT NULL,
-   PRIMARY KEY(Id_ApplicationStatus),
-   UNIQUE(status)
+   PRIMARY KEY(Id_ApplicationStatus)
 );
 
 CREATE TABLE IF NOT EXISTS Application(
@@ -149,7 +148,7 @@ CREATE TABLE IF NOT EXISTS EducationManager(
 );
 
 CREATE TABLE IF NOT EXISTS RecruitmentSession(
-   id_recruitement_session INT,
+   id_recruitement_session INT AUTO_INCREMENT,
    name VARCHAR(256) NOT NULL,
    start_date INT NOT NULL,
    end_date INT NOT NULL,
