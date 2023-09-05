@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS WebCand;
+
 -- Create the database
 CREATE DATABASE IF NOT EXISTS WebCand;
 
